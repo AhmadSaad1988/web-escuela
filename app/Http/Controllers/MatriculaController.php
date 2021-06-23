@@ -17,7 +17,6 @@ class MatriculaController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
@@ -27,7 +26,6 @@ class MatriculaController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -38,7 +36,7 @@ class MatriculaController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         // Entidad para Padre
         $padre = new Padre();
         $padre->name = $request->input('padre.name');
@@ -51,8 +49,8 @@ class MatriculaController extends Controller
         $padre->address = $request->input('padre.address');
         $padre->city = $request->input('padre.city');
         $padre->postalcode = $request->input('padre.postalcode');
-        $padre->matricula = $request->input('padre.matricula');
-        $padre->descuento = $request->input('padre.descuento');
+        $padre->matricula = 0;
+        $padre->descuento = 0;
         $padre->save();
 
         $jsonArray = json_encode($request->input('alumnos'));
@@ -73,7 +71,6 @@ class MatriculaController extends Controller
             $alumno->save();
         }
 
-
-        return response('Matricula realizada correctamente', 200);
+        return response($request, 200);
     }
 }

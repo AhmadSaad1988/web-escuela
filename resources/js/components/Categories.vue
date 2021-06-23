@@ -37,6 +37,10 @@ export default {
                 {
                     name: "Profesores",
                     route: "/profesores"
+                },
+                {
+                    name: "Grupos",
+                    route: "/grupos"
                 }
             ]
         };

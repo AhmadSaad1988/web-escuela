@@ -1,6 +1,6 @@
 <template>
     <div class="col-10">
-        <form name="add_name" id="add_name">
+        <form v-on:submit.prevent="submitForm">
             <div class="card mb-8">
                 <div class="card-header">
                     {{ "Datos del padre" }}
@@ -19,10 +19,11 @@
                                 type="text"
                                 class="form-control"
                                 name="name"
-                                value=""
                                 required
                                 autocomplete="name"
                                 autofocus
+                                placeholder="Nombre del padre/madre"
+                                v-model="padre.name"
                             />
                         </div>
 
@@ -37,10 +38,11 @@
                                 type="text"
                                 class="form-control"
                                 name="apellido"
-                                value=""
                                 required
                                 autocomplete="apellido"
                                 autofocus
+                                placeholder="Apellido del padre madre"
+                                v-model="padre.surname"
                             />
                         </div>
                     </div>
@@ -57,10 +59,11 @@
                                 type="text"
                                 class="form-control"
                                 name="name_ar"
-                                value=""
                                 required
                                 autocomplete="name"
                                 autofocus
+                                placeholder="اسم الأب"
+                                v-model="padre.name_ar"
                             />
                         </div>
 
@@ -75,10 +78,11 @@
                                 type="text"
                                 class="form-control "
                                 name="apellido_ar"
-                                value=""
                                 required
                                 autocomplete="apellido"
                                 autofocus
+                                placeholder="لقب الأب"
+                                v-model="padre.surname_ar"
                             />
                         </div>
                     </div>
@@ -95,9 +99,10 @@
                                 type="email"
                                 class="form-control"
                                 name="email"
-                                value=""
                                 required
                                 autocomplete="email"
+                                placeholder="Correo"
+                                v-model="padre.email"
                             />
                         </div>
 
@@ -112,10 +117,11 @@
                                 type="text"
                                 class="form-control"
                                 name="dni"
-                                value=""
                                 required
                                 autocomplete="DNI"
                                 autofocus
+                                placeholder="DNI"
+                                v-model="padre.dni"
                             />
                         </div>
 
@@ -130,10 +136,11 @@
                                 type="text"
                                 class="form-control"
                                 name="telefono"
-                                value=""
                                 required
                                 autocomplete="telefono"
                                 autofocus
+                                placeholder="Teléfono"
+                                v-model="padre.telefono"
                             />
                         </div>
                     </div>
@@ -150,10 +157,11 @@
                                 type="text"
                                 class="form-control"
                                 name="direccion"
-                                value=""
                                 required
                                 autocomplete="direccion"
                                 autofocus
+                                placeholder="Dirección"
+                                v-model="padre.address"
                             />
                         </div>
 
@@ -168,10 +176,11 @@
                                 type="text"
                                 class="form-control"
                                 name="city"
-                                value=""
                                 required
                                 autocomplete="city"
                                 autofocus
+                                placeholder="Ciudad"
+                                v-model="padre.city"
                             />
                         </div>
 
@@ -186,11 +195,11 @@
                                 type="text"
                                 class="form-control"
                                 name="postalcode"
-                                value=""
                                 required
                                 autocomplete="postalcode"
                                 autofocus
-                                v-model="inscription.padre.postalcode"
+                                placeholder="Código postal"
+                                v-model="padre.postalcode"
                             />
                         </div>
                     </div>
@@ -225,32 +234,52 @@
                             <tr
                                 class="row"
                                 id="dinamic-row"
-                                v-for="(hijo, index) in inscription.alumnos"
+                                v-for="(hijo, index) in alumnos"
                                 :key="index"
                             >
                                 <td class="col-2">
-                                    <input class="form-control" type="text"/>
-                                </td>
-                                <td class="col-2">
-                                    <input class="form-control" type="text" />
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        v-model="alumnos[index].name"
+                                    />
                                 </td>
                                 <td class="col-2">
                                     <input
-                                        class="form-control arabic-text"
+                                        class="form-control"
                                         type="text"
+                                        v-model="alumnos[index].surname"
                                     />
                                 </td>
                                 <td class="col-2">
                                     <input
                                         class="form-control arabic-text"
                                         type="text"
+                                        v-model="alumnos[index].name_ar"
+                                    />
+                                </td>
+                                <td class="col-2">
+                                    <input
+                                        class="form-control arabic-text"
+                                        type="text"
+                                        v-model="alumnos[index].surname_ar"
                                     />
                                 </td>
                                 <td class="col-3">
-                                    <input class="form-control" type="date" />
+                                    <input
+                                        class="form-control"
+                                        type="date"
+                                        v-model="alumnos[index].birthday"
+                                    />
                                 </td>
                                 <td class="col-1">
-                                    <a href="#" class="btn btn-danger remove float-right" @click="deleteRow(index)" v-if="index != 0">-</a>
+                                    <a
+                                        href="#"
+                                        class="btn btn-danger remove float-right"
+                                        @click="deleteRow(index)"
+                                        v-if="index != 0"
+                                        >-</a
+                                    >
                                 </td>
                             </tr>
                         </tbody>
@@ -258,12 +287,7 @@
                 </div>
             </div>
 
-            <button
-                id="submit"
-                type="submit"
-                class="btn  btn-primary col-3 center mb-4"
-                @click="submit()"
-            >
+            <button class="btn  btn-primary col-3 center mb-4">
                 {{ "Guardar" }}
             </button>
         </form>
@@ -274,50 +298,58 @@ export default {
     name: "form",
     data() {
         return {
-            inscription: {
-                padre: [
-                    {
-                        id: "",
-                        name: "",
-                        surname: "",
-                        nameAr: "",
-                        surnameAr: "",
-                        email: "", 
-                        dni: "",
-                        phone: "",
-                        address: "",
-                        city: "",
-                        postalcode: ""
-                    }
-                ],
-                alumnos: [
-                    {
-                        name: "",
-                        surname: "",
-                        nameAr: "",
-                        surnameAr: "",
-                        birthday: ""
-                    }
-                ]
-            }
+            padre: {
+                id: "",
+                name: "",
+                surname: "",
+                name_ar: "",
+                surname_ar: "",
+                email: "",
+                dni: "",
+                telefono: "",
+                address: "",
+                city: "",
+                postalcode: ""
+            },
+            alumnos: [
+                {
+                    name: "",
+                    surname: "",
+                    name_ar: "",
+                    surname_ar: "",
+                    birthday: ""
+                }
+            ]
         };
     },
     methods: {
         addRow() {
-            this.inscription.alumnos.push({
+            this.alumnos.push({
                 name: "",
                 surname: "",
-                nameAr: "",
-                surnameAr: "",
+                name_ar: "",
+                surname_ar: "",
                 birthday: ""
             });
         },
         deleteRow(index) {
-            this.inscription.alumnos.splice(index, 1);
+            this.alumnos.splice(index, 1);
             console.log("HOLA");
-        }, 
-        submit() {
-            console.log(this.inscription);
+        },
+        submitForm() {
+            axios
+                .post("api/matricula", this.$data)
+                .then(response => {
+                    if (response.status === 200) {
+                        this.$router.push({ path: "/" });
+                    }
+                })
+                .catch(error => {
+                    console.log(this.$data);
+                })
+                .finally(() => {
+                    //Perform action in always
+                });
         }
     }
 };

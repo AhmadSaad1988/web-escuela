@@ -7,6 +7,7 @@ import Padres from './components/views/Padres.vue'
 import Alumnos from './components/views/Alumnos.vue'
 import Pagos from './components/views/Pagos.vue'
 import Profesores from './components/views/Profesores.vue'
+import Grupos from './components/views/Grupos.vue'
 
 Vue.use(VueRouter);
 
@@ -35,9 +36,11 @@ const router = new VueRouter({
         {
             path: "/profesores",
             component: Profesores
+        },
+        {
+            path: "/grupos",
+            component: Grupos
         }
-        
-    
     ]
 
 })

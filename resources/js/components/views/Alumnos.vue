@@ -9,6 +9,7 @@
                     <th scope="col">Apellido</th>
                     <th scope="col">الإسم</th>
                     <th scope="col">اللقب</th>
+                    <th scope="col">Fecha de nacimiento</th>
                 </tr>
             </thead>
 
@@ -19,6 +20,7 @@
                     <td>{{ alumno.surname }}</td>
                     <td>{{ alumno.name_ar }}</td>
                     <td>{{ alumno.surname_ar }}</td>
+                    <td>{{ alumno.birthday }}</td>
 
                 </tr>
             </tbody>
